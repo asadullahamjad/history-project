@@ -8,10 +8,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1C2C59;
+            background-color: #213B87;
             color: white;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         .container {
@@ -20,51 +21,53 @@
 
         .timeline {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #fff;
+            border-top: 2px solid #fff;
             padding-top: 20px;
             margin-top: 50px;
+            position: relative;
         }
-
 
         .timeline-item {
             text-align: center;
-            flex: 1;
             color: #fff;
             cursor: pointer;
             position: relative;
             transition: color 0.3s ease;
+            margin-bottom: 10px;
+            flex: 1;
+            padding: 10px;
         }
+
         .timeline-item.active::after {
             content: '';
             position: absolute;
-            top: -22px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
             width: 40%;
-            height: 4px;
+            height: 7px;
             background-color: #E63946;
             color: #E63946;
         }
 
+        .timeline-item.active {
+            color: #E63946;
+        }
 
         .events {
             display: flex;
             transition: transform 0.3s ease-in-out;
-            width: calc(100%);
-            /* Account for buttons */
             overflow: hidden;
         }
 
         .event {
-            width: 25%;
-            background-color: #1C2C59;
-            border-left: 4px solid gray;
+            background-color: #213B87;
+            border-left: 2px solid rgb(255, 255, 255, .4);
             padding: 20px;
             color: #fff;
-            flex: 0 0 calc(22% - 20px);
-            /* Show 4 blocks at a time */
             margin-right: 20px;
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
@@ -72,60 +75,145 @@
         .event.active {
             border-color: #E63946;
         }
-        .heading{
+
+        .heading {
             color: white;
-            font-weight: normal;
+            font-weight: 700;
         }
-        .heading.active{
+
+        .heading.active {
             color: red;
+        }
+
+        .arrow {
+            position: absolute;
+            top: -21px;
+            right: -5px;
+            font-size: 30px;
         }
 
         .event h3 {
             color: white;
-            /* Updated to ensure contrast on active */
+        }
+
+        /* Responsive Design */
+
+        @media (min-width: 1024px) {
+            .event {
+                flex: 0 0 calc(22% - 20px);
+            }
+
+            .timeline-item {
+                flex: 0 0 calc(9% - 10px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .event {
+                flex: 0 0 calc(30% - 20px);
+            }
+
+            .timeline-item {
+                flex: 0 0 calc(9% - 10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .event {
+                flex: 0 0 calc(35% - 20px);
+            }
+
+            .timeline-item {
+                flex: 0 0 calc(7% - 10px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .event {
+                flex: 0 0 calc(60% - 20px);
+            }
+
+            .timeline {
+                justify-content: flex-start;
+                border-top: none;
+            }
+
+            .timeline-item {
+                flex: 0 0 calc(10% - 10px);
+            }
+
+            .timeline-item.active::after {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40%;
+                height: 4px;
+                background-color: transparent;
+                color: transparent;
+            }
+
+            .arrow {
+                display: none;
+            }
+
+            .timeline-item.active {
+                color: #E63946;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>History</h1>
+        <h1 style="padding-bottom: 40px; text-transform: uppercase;">History</h1>
         <div class="events">
             <div class="event active" data-year="1951">
                 <h3 class="heading active">1951</h3>
+                <p>Molly Paprimik founded Jack & Jill School in the dining room of her home on Nightingale Road with one
+                    boy and one girl...</p>
                 <p>Molly Paprimik founded Jack & Jill School in the dining room of her home on Nightingale Road with one
                     boy and one girl...</p>
             </div>
             <div class="event" data-year="1953">
                 <h3 class="heading">1953</h3>
                 <p>Mrs Paprimik initially managed everything single-handed, but with the rapid growth...</p>
+                <p>Mrs Paprimik initially managed everything single-handed, but with the rapid growth...</p>
             </div>
             <div class="event" data-year="1961">
                 <h3 class="heading">1961</h3>
+                <p>Continued rapid growth in numbers meant that Mrs Paprimik could no longer accommodate...</p>
                 <p>Continued rapid growth in numbers meant that Mrs Paprimik could no longer accommodate...</p>
             </div>
             <div class="event" data-year="1982">
                 <h3 class="heading">1982</h3>
                 <p>New facilities were added to support the growing number of students...</p>
+                <p>New facilities were added to support the growing number of students...</p>
             </div>
             <div class="event" data-year="1988">
                 <h3 class="heading">1988</h3>
+                <p>New facilities were added to support the growing number of students...</p>
                 <p>New facilities were added to support the growing number of students...</p>
             </div>
             <div class="event" data-year="1994">
                 <h3 class="heading">1994</h3>
                 <p>New facilities were added to support the growing number of students...</p>
+                <p>New facilities were added to support the growing number of students...</p>
             </div>
             <div class="event" data-year="2010">
                 <h3 class="heading">2010</h3>
+                <p>New facilities were added to support the growing number of students...</p>
                 <p>New facilities were added to support the growing number of students...</p>
             </div>
             <div class="event" data-year="2020">
                 <h3 class="heading">2020</h3>
                 <p>New facilities were added to support the growing number of students...</p>
+                <p>New facilities were added to support the growing number of students...</p>
             </div>
             <div class="event" data-year="2024">
                 <h3 class="heading">2024</h3>
+                <p>New facilities were added to support the growing number of students...</p>
                 <p>New facilities were added to support the growing number of students...</p>
             </div>
         </div>
@@ -139,12 +227,13 @@
             <div class="timeline-item" data-year="2010">2010</div>
             <div class="timeline-item" data-year="2020">2020</div>
             <div class="timeline-item" data-year="2024">2024</div>
+            <div class="arrow">&rarr;</div>
         </div>
     </div>
 
     <script>
-       // Function to handle timeline item clicks
-       document.querySelectorAll('.timeline-item').forEach(item => {
+        // Function to handle timeline item clicks
+        document.querySelectorAll('.timeline-item').forEach(item => {
             item.addEventListener('click', function () {
                 const year = this.getAttribute('data-year');
 
