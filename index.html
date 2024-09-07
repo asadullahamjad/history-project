@@ -1,44 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timeline Design</title>
-    <link rel="stylesheet" href="./styles.css">
-    
+    <title>History Timeline</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1C2C59;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 50px;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #fff;
+            padding-top: 20px;
+            margin-top: 50px;
+        }
+
+
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .timeline-item.active::after {
+            content: '';
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 4px;
+            background-color: #E63946;
+            color: #E63946;
+        }
+
+
+        .events {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+            width: calc(100%);
+            /* Account for buttons */
+            overflow: hidden;
+        }
+
+        .event {
+            width: 25%;
+            background-color: #1C2C59;
+            border-left: 4px solid gray;
+            padding: 20px;
+            color: #fff;
+            flex: 0 0 calc(22% - 20px);
+            /* Show 4 blocks at a time */
+            margin-right: 20px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .event.active {
+            border-color: #E63946;
+        }
+        .heading{
+            color: white;
+            font-weight: normal;
+        }
+        .heading.active{
+            color: red;
+        }
+
+        .event h3 {
+            color: white;
+            /* Updated to ensure contrast on active */
+        }
+    </style>
 </head>
+
 <body>
-    <div class="timeline-container">
-        <div class="timeline">
-            <div class="year-container">
-                <div class="year">1951</div>
-                <div class="content">
-                    <h3>HISTORY</h3>
-                    <p>
-                        Molly Papirnik founded Jack & Jill School in the dining room of her home on Nightingale Road with one boy and one girl, offering traditional education in the home from home environment that she felt to be of paramount importance. This is Nightingale House in Hampton where Reception to Year Two are based.
-                    </p>
-                </div>
+    <div class="container">
+        <h1>History</h1>
+        <div class="events">
+            <div class="event active" data-year="1951">
+                <h3 class="heading active">1951</h3>
+                <p>Molly Paprimik founded Jack & Jill School in the dining room of her home on Nightingale Road with one
+                    boy and one girl...</p>
             </div>
-            <div class="year-container">
-                <div class="year">1953</div>
-                <div class="content">
-                    <p>
-                        Mrs Papirnik initially managed everything single handed, but with the rapid growth of her school, extra assistance was required. Hence, she appointed her first teacher, Elsie, who remained with her for 30 years before a well-earned retirement on the South coast. Molly continued collecting and dropping of pupils in her car, which she nicknamed Mildred, at the beginning and end of the day for many years.
-                    </p>
-                </div>
+            <div class="event" data-year="1953">
+                <h3 class="heading">1953</h3>
+                <p>Mrs Paprimik initially managed everything single-handed, but with the rapid growth...</p>
             </div>
-            <!-- Add more year-container divs as needed for other years -->
+            <div class="event" data-year="1961">
+                <h3 class="heading">1961</h3>
+                <p>Continued rapid growth in numbers meant that Mrs Paprimik could no longer accommodate...</p>
+            </div>
+            <div class="event" data-year="1982">
+                <h3 class="heading">1982</h3>
+                <p>New facilities were added to support the growing number of students...</p>
+            </div>
+            <div class="event" data-year="1988">
+                <h3 class="heading">1988</h3>
+                <p>New facilities were added to support the growing number of students...</p>
+            </div>
+            <div class="event" data-year="1994">
+                <h3 class="heading">1994</h3>
+                <p>New facilities were added to support the growing number of students...</p>
+            </div>
+            <div class="event" data-year="2010">
+                <h3 class="heading">2010</h3>
+                <p>New facilities were added to support the growing number of students...</p>
+            </div>
+            <div class="event" data-year="2020">
+                <h3 class="heading">2020</h3>
+                <p>New facilities were added to support the growing number of students...</p>
+            </div>
+            <div class="event" data-year="2024">
+                <h3 class="heading">2024</h3>
+                <p>New facilities were added to support the growing number of students...</p>
+            </div>
         </div>
-        <div class="timeline-footer">
-            <div class="timeline-years">
-                <span class="year active">1951</span>
-                <span class="year">1953</span>
-                <span class="year">1961</span>
-                <!-- Add more years as needed -->
-            </div>
+        <div class="timeline">
+            <div class="timeline-item active" data-year="1951">1951</div>
+            <div class="timeline-item" data-year="1953">1953</div>
+            <div class="timeline-item" data-year="1961">1961</div>
+            <div class="timeline-item" data-year="1982">1982</div>
+            <div class="timeline-item" data-year="1988">1988</div>
+            <div class="timeline-item" data-year="1994">1994</div>
+            <div class="timeline-item" data-year="2010">2010</div>
+            <div class="timeline-item" data-year="2020">2020</div>
+            <div class="timeline-item" data-year="2024">2024</div>
         </div>
     </div>
 
-    <script src="./index.js"></script>
+    <script>
+       // Function to handle timeline item clicks
+       document.querySelectorAll('.timeline-item').forEach(item => {
+            item.addEventListener('click', function () {
+                const year = this.getAttribute('data-year');
+
+                // Remove active class from all timeline items
+                document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
+
+                // Add active class to clicked timeline item
+                this.classList.add('active');
+
+                // Remove active class from all event items and headings
+                document.querySelectorAll('.event').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.heading').forEach(el => el.classList.remove('active'));
+
+                // Add active class to the corresponding event item and heading
+                const selectedEvent = document.querySelector(`.event[data-year="${year}"]`);
+                selectedEvent.classList.add('active');
+                selectedEvent.querySelector('.heading').classList.add('active');
+
+                // Move the selected event to the first position
+                const eventContainer = document.querySelector('.events');
+                eventContainer.prepend(selectedEvent);
+            });
+        });
+    </script>
 </body>
+
 </html>
