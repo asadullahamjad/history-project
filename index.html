@@ -29,6 +29,7 @@
             padding-top: 20px;
             margin-top: 50px;
             position: relative;
+            overflow: hidden;
         }
 
         .timeline-item {
@@ -62,6 +63,7 @@
             display: flex;
             transition: transform 0.3s ease-in-out;
             overflow: hidden;
+            scroll-behavior: smooth;
         }
 
         .event {
@@ -256,13 +258,43 @@
     
                 // Scroll the selected event into view
                 selectedEvent.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-    
-                // Optionally, move the selected event to the first position if needed
-                // const eventContainer = document.querySelector('.events');
-                // eventContainer.prepend(selectedEvent);
             });
         });
+    
+        // Smooth scroll for mouse wheel
+        let isScrolling;
+    
+        // Drag to scroll
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+    
+        const container = document.querySelector('.events');
+    
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
+    
+        container.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+    
+        container.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+    
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 2; // Scroll-fast multiplier
+            container.scrollLeft = scrollLeft - walk;
+        });
     </script>
+    
+    
     
 </body>
 
