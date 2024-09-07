@@ -63,6 +63,10 @@
             transition: transform 0.3s ease-in-out;
             overflow: hidden;
             scroll-behavior: smooth;
+            cursor: grab;
+        }
+        .events.dragging{
+            cursor: grabbing;
         }
 
         .event {
@@ -72,6 +76,7 @@
             color: #fff;
             margin-right: 20px;
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            
         }
 
         .event.active {
@@ -263,35 +268,70 @@
         // Smooth scroll for mouse wheel
         let isScrolling;
     
-        // Drag to scroll
+        // Drag to slide one event box left or right with synchronized timeline
         let isDragging = false;
         let startX;
-        let scrollLeft;
-    
-        const container = document.querySelector('.events');
+        let container = document.querySelector('.events');
+        let timeline = document.querySelector('.timeline');
+        let boxWidth = container.querySelector('.event').offsetWidth + parseInt(getComputedStyle(container.querySelector('.event')).marginRight); // Calculate width including margin
     
         container.addEventListener('mousedown', (e) => {
             isDragging = true;
-            startX = e.pageX - container.offsetLeft;
-            scrollLeft = container.scrollLeft;
+            startX = e.pageX;
+            container.classList.add('dragging'); // Change cursor to grabbing
         });
     
         container.addEventListener('mouseleave', () => {
             isDragging = false;
+            container.classList.remove('dragging'); // Revert cursor
         });
     
-        container.addEventListener('mouseup', () => {
+        container.addEventListener('mouseup', (e) => {
+            if (isDragging) {
+                const distance = e.pageX - startX;
+                const direction = distance < 0 ? 1 : -1; // Determine direction of drag
+                scrollEventAndTimeline(direction);
+            }
             isDragging = false;
+            container.classList.remove('dragging'); // Revert cursor
         });
     
         container.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            e.preventDefault();
-            const x = e.pageX - container.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll-fast multiplier
-            container.scrollLeft = scrollLeft - walk;
+            if (isDragging) {
+                e.preventDefault(); // Prevent default browser dragging
+            }
         });
+    
+        function scrollEventAndTimeline(direction) {
+            // Find the active event and timeline item
+            const activeEvent = document.querySelector('.event.active');
+            const activeTimelineItem = document.querySelector('.timeline-item.active');
+    
+            // Get the next or previous event and timeline item based on direction
+            const nextEvent = direction === 1 ? activeEvent.nextElementSibling : activeEvent.previousElementSibling;
+            const nextTimelineItem = direction === 1 ? activeTimelineItem.nextElementSibling : activeTimelineItem.previousElementSibling;
+    
+            // If the next or previous event exists, scroll to it and update the active classes
+            if (nextEvent && nextTimelineItem) {
+                // Remove active class from current items
+                activeEvent.classList.remove('active');
+                activeTimelineItem.classList.remove('active');
+                activeEvent.querySelector('.heading').classList.remove('active');
+    
+                // Add active class to new items
+                nextEvent.classList.add('active');
+                nextEvent.querySelector('.heading').classList.add('active');
+                nextTimelineItem.classList.add('active');
+    
+                // Scroll the event container and timeline to the new active items
+                nextEvent.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                nextTimelineItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            }
+        }
     </script>
+    
+    
+    
     
     
     
