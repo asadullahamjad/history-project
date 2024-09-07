@@ -13,6 +13,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
         }
 
         .container {
@@ -66,7 +67,7 @@
         .event {
             background-color: #213B87;
             border-left: 2px solid rgb(255, 255, 255, .4);
-            padding: 20px;
+            padding: 0px 20px 20px 20px;
             color: #fff;
             margin-right: 20px;
             transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -79,6 +80,7 @@
         .heading {
             color: white;
             font-weight: 700;
+            margin: 0px;
         }
 
         .heading.active {
@@ -236,28 +238,32 @@
         document.querySelectorAll('.timeline-item').forEach(item => {
             item.addEventListener('click', function () {
                 const year = this.getAttribute('data-year');
-
+    
                 // Remove active class from all timeline items
                 document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
-
+    
                 // Add active class to clicked timeline item
                 this.classList.add('active');
-
+    
                 // Remove active class from all event items and headings
                 document.querySelectorAll('.event').forEach(el => el.classList.remove('active'));
                 document.querySelectorAll('.heading').forEach(el => el.classList.remove('active'));
-
+    
                 // Add active class to the corresponding event item and heading
                 const selectedEvent = document.querySelector(`.event[data-year="${year}"]`);
                 selectedEvent.classList.add('active');
                 selectedEvent.querySelector('.heading').classList.add('active');
-
-                // Move the selected event to the first position
-                const eventContainer = document.querySelector('.events');
-                eventContainer.prepend(selectedEvent);
+    
+                // Scroll the selected event into view
+                selectedEvent.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    
+                // Optionally, move the selected event to the first position if needed
+                // const eventContainer = document.querySelector('.events');
+                // eventContainer.prepend(selectedEvent);
             });
         });
     </script>
+    
 </body>
 
 </html>
